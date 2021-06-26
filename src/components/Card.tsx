@@ -23,7 +23,13 @@ function Card({ title, content, user }: CardProps) {
           </div>
           {/* Detail Button */}
           <div className="w-1/12 flex justify-center items-center">
-            <img className="h-2" src="detail.png"/>
+            <img
+              className="h-2"
+              src="detail.png"
+              onClick={
+                e => { console.log(e); }
+              }
+           />
           </div>
         </div>      
   );
