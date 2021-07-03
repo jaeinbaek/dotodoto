@@ -2,24 +2,49 @@ import { useState } from "react";
 import Card, { CardProps } from "./Card";
 
 function Body() {
-    
+  // Card States
   const [cards, setCards] = useState<CardProps[] | []>(
-    [{ title: '할 일을 추가해 보세요!', content: '할 일을 추가해 보세요!', user: '두투두투', createdAt: '2021-06-26'}]
+    [
+      { 
+        title: '안녕하세요!', 
+        description: '할 일을 추가해 보세요!', 
+        user: '두투두투', 
+        createdAt: '2021-06-26', 
+        subTodo: 
+        [
+          {
+            checked: false,
+            value: '새 항목 추가 누르기'
+          },
+          {
+            checked: false,
+            value: '내용 채우기'
+          }
+        ]
+      }
+    ]
   )
 
+  // New card states
   const [apearNewCard, setApearNewCard] = useState<boolean>(false)
-  const [newCardTitle, setNewCardTitle] = useState<string>()
-  const [newCardContent, setNewCardContent] = useState<string>()
+  const [newCardTitle, setNewCardTitle] = useState<string>('')
+  const [newCardDescription, setNewCardDescription] = useState<string>('')
 
-  // handle add card button event
+  // Handle add card button event
   const handleAdd = ():void => setApearNewCard(!apearNewCard)
 
-  const newCardTitleChange(e):void => {
+  // Handleing new card values
+  const newCardTitleChange = (e:any):void => {
     setNewCardTitle(e.target.value)
   }
-  const newCardContentChange(e):void => {
-    setNewCardContent(e.target.value)
+  const newCardDescriptionChange = (e:any):void => {
+    setNewCardDescription(e.target.value)
   };
+
+  const resetNewCardStates = ():void => {
+    setNewCardTitle('')
+    setNewCardDescription('')
+  }
 
   const handleAddData = ():void => {
     let d = new Date();
@@ -28,8 +53,11 @@ function Body() {
     let day = d.getDay()
     let createdAt = (year + '-' + month + '-' + day)
 
-    setCards([...cards, { title: 'title', content: 'content', user: '두투두투', createdAt: createdAt}])
-    console.log(cards)
+    setCards([...cards, { title: newCardTitle, description: newCardDescription, user: '두투두투', createdAt: createdAt}])
+    // disapear new card UI
+    setApearNewCard(!apearNewCard)
+    resetNewCardStates()
+
   }
   
   return (
@@ -47,35 +75,30 @@ function Body() {
               </div>
           </div>
           {/* Search */}
-          <div className="my-2 flex flex-row  justify-between">
+          <div className="my-2 flex flex-row justify-between">
             <input 
                 className="h-6 w-1/2 px-2 rounded bg-gray-500 opacity-20 hover:bg-gray-300 focus:bg-gray-300 shadow-lg" 
                 placeholder="Search"
             />
-            <button
-              className="text-white"
-              onClick={ handleAdd }
-            >
-              새 할일 추가
-            </button>
+              { apearNewCard ? '' : <button className="text-white" onClick={ handleAdd }>새 할일 추가</button>}
           </div>
           {/* Add New Card UI */}
           { apearNewCard && 
-            <div className="h-12 flex flex-row bg-white mb-2 rounded shadow-lg transform hover:bg-gray-100">
-              <div className="font-bold">
+            <div className=" flex flex-col mb-2 rounded bg-white shadow-lg transform">
+              <div className="flex font-bold ml-2 mt-2">
                 새 항목 추가
               </div>
               타이틀
-              <input onChange={ newCardTitleChange } value={ newCardTitle } />
+              <input className="flex" onChange={ newCardTitleChange } value={ newCardTitle }/>
               콘텐츠
-              <input onChange={ newCardContentChange } value={ newCardContent } />
+              <input onChange={ newCardDescriptionChange } value={ newCardDescription }/>
               <button onClick={ handleAddData }>추가</button>
             </div> 
           } 
           {/* Cards */}
           <div>
-            {cards.map(({title, content, user}) => {
-                return <Card title={title} content={content} user={user} />
+            {cards.map(({title, description, user, createdAt, subTodo}) => {
+                return <Card title={title} description={description} user={user} createdAt={createdAt} subTodo={subTodo}/>
             })}
           </div>
         </div>      
