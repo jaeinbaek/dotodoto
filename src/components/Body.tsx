@@ -14,7 +14,7 @@ function Body() {
         [
           {
             checked: false,
-            value: '새 항목 추가 누르기'
+            value: '새 할일 추가 누르기'
           },
           {
             checked: false,
@@ -49,9 +49,10 @@ function Body() {
   const handleAddData = ():void => {
     let d = new Date();
     let year = d.getFullYear()
-    let month = d.getMonth()
-    let day = d.getDay()
+    let month = (d.getMonth() + 1)
+    let day = d.getDate()
     let createdAt = (year + '-' + month + '-' + day)
+    console.log(d.getUTCMonth())
 
     setCards([...cards, { title: newCardTitle, description: newCardDescription, user: '두투두투', createdAt: createdAt}])
     // disapear new card UI
@@ -85,14 +86,18 @@ function Body() {
           {/* Add New Card UI */}
           { apearNewCard && 
             <div className=" flex flex-col mb-2 rounded bg-white shadow-lg transform">
-              <div className="flex font-bold ml-2 mt-2">
-                새 항목 추가
+              <div className="m-2">
+                <div className="flex mb-4 font-bold">
+                  새 항목 추가
+                </div>
+                <div className="flex flex-col">
+                  <div className="font-semibold text-xs">제목</div>
+                  <input className="flex mb-1" onChange={ newCardTitleChange } value={ newCardTitle }/>
+                  <div className="font-semibold text-xs">내용</div>
+                  <input className="flex mb-1" onChange={ newCardDescriptionChange } value={ newCardDescription }/>
+                  <button className="w-10 rounded-xl bg-gray-300 font-semibold text-xs text-white" onClick={ handleAddData }>추가</button>
+                </div>
               </div>
-              타이틀
-              <input className="flex" onChange={ newCardTitleChange } value={ newCardTitle }/>
-              콘텐츠
-              <input onChange={ newCardDescriptionChange } value={ newCardDescription }/>
-              <button onClick={ handleAddData }>추가</button>
             </div> 
           } 
           {/* Cards */}

@@ -48,7 +48,7 @@ function Card({ title, description, user, createdAt, subTodo}:CardProps) {
                   </div>
                   <hr className="my-2"/>
                     {subTodo?.map(({checked, value}) => {
-                      return <div><input type="checkbox" checked={checked}/> {value}</div>
+                      return <div className="flex items-center h-5 text-xs font-semibold"><input className="mr-1" type="checkbox" checked={checked}/>{value}</div>
                     })}
                 </div>
             }
