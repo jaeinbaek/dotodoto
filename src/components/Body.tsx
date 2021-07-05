@@ -52,7 +52,6 @@ function Body() {
     let month = (d.getMonth() + 1)
     let day = d.getDate()
     let createdAt = (year + '-' + month + '-' + day)
-    console.log(d.getUTCMonth())
 
     setCards([...cards, { title: newCardTitle, description: newCardDescription, user: '두투두투', createdAt: createdAt}])
     // disapear new card UI
