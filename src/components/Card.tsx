@@ -1,10 +1,5 @@
 import { useState } from "react";
 
-// export type SubTodo = {
-  // checked: boolean;
-  // value: string;
-// }
-
 export type CardProps = {
     title: string;
     description?: string;
@@ -30,12 +25,7 @@ function Card({ title, description, user, createdAt, subTodo}:CardProps) {
           <div className="w-10/12 flex flex-col my-1 py-1">
             <div className="text-xs text-gray-500">
               {user}
-              {
-              apearCardDetail && ' create at '
-              }
-              {
-              apearCardDetail && createdAt
-              }
+              {apearCardDetail && ` create at ${createdAt}`}
             </div>
             <div className="font-bold">
               {title}

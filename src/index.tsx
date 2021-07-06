@@ -5,10 +5,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import { createStore } from 'redux'
-import reducers from './reducers';
 import { Provider } from 'react-redux';
+import cards from './reducers';
 
-const store = createStore(reducers);
+const store = createStore(cards);
 
 ReactDOM.render(
   <React.StrictMode>

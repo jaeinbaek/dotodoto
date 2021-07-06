@@ -3,7 +3,7 @@ import Card, { CardProps } from "./Card";
 
 function Body() {
   // Card States
-  const [cards, setCards] = useState<CardProps[] | []>(
+  const [cards, setCards] = useState<CardProps[]>(
     [
       { 
         title: '안녕하세요!', 
@@ -47,11 +47,11 @@ function Body() {
   }
 
   const handleAddData = ():void => {
-    let d = new Date();
-    let year = d.getFullYear()
-    let month = (d.getMonth() + 1)
-    let day = d.getDate()
-    let createdAt = (year + '-' + month + '-' + day)
+    const d = new Date();
+    const year = d.getFullYear()
+    const month = (d.getMonth() + 1)
+    const day = d.getDate()
+    const createdAt = (year + '-' + month + '-' + day)
 
     setCards([...cards, { title: newCardTitle, description: newCardDescription, user: '두투두투', createdAt: createdAt}])
     // disapear new card UI
@@ -68,6 +68,7 @@ function Body() {
               <div className="mb-4 text-3xl text-white font-semibold">메모장</div>
               {/* Categorys */}
               <div className="mb-4">
+                {/* 추후에 컴포넌트화 예정 */}
                 <button className="max-w-xs overflow-hidden mb-2 mr-2 px-2 rounded-xl text-sm bg-gray-300 bg-opacity-20 text-white">메모장</button>
                 <button className="max-w-xs overflow-hidden mb-2 mr-2 px-2 rounded-xl text-sm bg-gray-300 bg-opacity-20 text-white">회사</button>
                 <button className="max-w-xs overflow-hidden mb-2 mr-2 px-2 rounded-xl text-sm bg-gray-300 bg-opacity-20 text-white">장보기</button>
@@ -80,7 +81,7 @@ function Body() {
                 className="h-6 w-1/2 px-2 rounded bg-gray-500 opacity-20 hover:bg-gray-300 focus:bg-gray-300 shadow-lg" 
                 placeholder="Search"
             />
-              { apearNewCard ? '' : <button className="text-white" onClick={ handleAdd }>새 할일 추가</button>}
+              { apearNewCard ? null : <button className="text-white" onClick={ handleAdd }>새 할일 추가</button>}
           </div>
           {/* Add New Card UI */}
           { apearNewCard && 

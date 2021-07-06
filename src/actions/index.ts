@@ -1,9 +1,13 @@
 import { CardProps } from '../components/Card';
 import * as types from './ActionTypes';
 
-export const addTodo = (cardData: CardProps):any => ({
+export type CardAction =
+  | ReturnType<typeof addTodo>
+  | ReturnType<typeof delTodo>
+
+export const addTodo = (cardData: CardProps) => ({
     type: types.ADD_TODO,
-    cardData
+    payload: cardData
 });
 
 export const delTodo = () => ({
