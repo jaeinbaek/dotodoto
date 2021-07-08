@@ -1,12 +1,5 @@
 import { useState } from "react";
-
-export type CardProps = {
-    title: string;
-    description?: string;
-    user: string;
-    createdAt: string; 
-    subTodo?: any[];
-}
+import { CardProps } from "../types/types";
 
 function Card({ title, description, user, createdAt, subTodo}:CardProps) {
 
