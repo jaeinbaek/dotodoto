@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addTodo } from "../actions";
 import { CardStates } from "../types/types";
 
 import Card from "./Card";
@@ -42,7 +41,7 @@ function Body() {
               { apearNewCard ? null : <button className="text-white" onClick={ handleAdd }>새 할일 추가</button>}
           </div>
           {/* Add New Card UI */}
-          { apearNewCard && <SetNewCard/> }
+          { apearNewCard && <SetNewCard setApearNewCard={setApearNewCard} /> }
           
           {/* Cards */}
           <div>

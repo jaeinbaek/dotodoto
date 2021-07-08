@@ -2,8 +2,6 @@ import { CardStates } from '../types/types';
 import { DEL_TODO, ADD_TODO } from './../actions/ActionTypes';
 import { CardAction } from './../actions/index';
 
-
-
 // Def init state
 const initialState: CardStates = {
     card: [
