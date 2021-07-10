@@ -4,7 +4,8 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className="font-noto antialiased bg-cover bg-center h-screen " style={{backgroundImage: "url(background.jpg)"}}>
+    <div className="font-noto antialiased bg-cover bg-center h-screen bg-white dark:bg-gray-900" >
+    {/* <div className="font-noto antialiased bg-cover bg-center h-screen bg-gray-900	" style={{backgroundImage: "url(background.jpg)"}}> */}
       <div className="flex flex-col h-full overflow-scroll overflow-x-hidden">
         <Header/>
         <Body/>

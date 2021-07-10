@@ -4,7 +4,8 @@ export type CardProps = {
     title: string;
     description?: string;
     user: string;
-    createdAt: string; 
+    createdAt: string;
+    subTodoKey: number;
     subTodo?: any[];
 }
 

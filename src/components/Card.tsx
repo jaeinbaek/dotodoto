@@ -3,6 +3,7 @@ import { CardProps } from "../types/types";
 
 function Card({ title, description, user, createdAt, subTodo}:CardProps) {
 
+  // State for show card detail
   const [apearCardDetail, setApearCardDetail] = useState<boolean>(false)
 
   // Handle detail button event
@@ -30,8 +31,8 @@ function Card({ title, description, user, createdAt, subTodo}:CardProps) {
                     {description}
                   </div>
                   <hr className="my-2"/>
-                    {subTodo?.map(({checked, value}) => {
-                      return <div className="flex items-center h-5 text-xs font-semibold"><input className="mr-1" type="checkbox" checked={checked}/>{value}</div>
+                    {subTodo?.map(({checked, value, subTodoKey}) => {
+                      return <div className="flex items-center h-5 text-xs font-semibold"><input className="mr-1" type="checkbox" checked={checked} key={subTodoKey}/>{value}</div>
                     })}
                 </div>
             }

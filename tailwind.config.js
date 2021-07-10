@@ -1,10 +1,20 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'class', // or 'media' or 'class'
   theme: {
     fontFamily: {
       'noto': ['Noto Sans KR', 'sans-serif']
     },
+    colors: {
+      transparent: 'transparent',
+      current: 'currentColor',
+      gray: colors.gray,
+      teal: colors.teal,
+      blue: colors.blue,
+      sky: colors.sky,
+    }
   },
   variants: {
     extend: {

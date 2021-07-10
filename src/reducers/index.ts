@@ -11,13 +11,16 @@ const initialState: CardStates = {
             description: '할 일을 추가해 보세요!', 
             user: '두투두투', 
             createdAt: '2021-06-26', 
+            subTodoKey: 1,
             subTodo: 
             [
               {
+                subTodoKey: 0,
                 checked: false,
                 value: '새 할일 추가 누르기'
               },
               {
+                subTodoKey: 1,
                 checked: false,
                 value: '내용 채우기'
               }
