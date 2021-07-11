@@ -10,6 +10,7 @@ import cards from './reducers';
 
 const store = createStore(cards);
 
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

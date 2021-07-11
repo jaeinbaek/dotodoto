@@ -9,7 +9,7 @@ export type CardAction =
 // Action creator
 export const addTodo = (cardData: CardProps) => ({
     type: types.ADD_TODO,
-    payload: cardData
+    payload: cardData,
 });
 
 export const delTodo = () => ({

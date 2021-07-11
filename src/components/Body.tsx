@@ -1,11 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CardProps, CardStates } from "../types/types";
-
-import { FiTrash2 } from "react-icons/fi";
-
 import Card from "./Card";
 import SetNewCard from "./SetNewCard";
+
 
 function Body() {
   // Use redux
@@ -42,9 +40,14 @@ function Body() {
   const handleAdd = ():void => setApearNewCard(!apearNewCard)
   // Refresh search result for add new
   const afterAdd = ():void => {
-    setSearchResult(cards)
     setApearNewCard(false)
   }
+
+  // Searchresult update when cards change
+  useEffect(() => {
+    setSearchResult(cards)  
+  },[cards])
+
   
   return (
         <div className="flex-grow flex flex-col mx-auto container max-w-3xl px-4 mb-20">
@@ -65,18 +68,19 @@ function Body() {
           <div className="my-2 flex flex-row justify-between">
             <div className="flex flex-row items-center h-6 w-1/2">
               <input 
-                  className="px-1 border-b border-none rounded bg-transparent border border-transparent focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent shadow-lg" 
+                  className="px-1 border-b border-none rounded bg-transparent border border-transparent text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent shadow-lg" 
                   placeholder="🔎 제목 검색"
                   onChange={searchValueChange}
                   value={searchValue}
               />
               <button
-                className="h-6 ml-2 px-2 text-sm text-white rounded bg-gradient-to-r from-green-400 to-blue-500 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50 shadow-lg"
+                className="h-6 ml-2 px-2 text-sm text-white rounded bg-gradient-to-r from-teal-400 to-blue-400 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50 shadow-lg"
                 onClick={handleClearSearch} 
               >
                 초기화
               </button>
             </div>
+            
             { apearNewCard ? null : <button className="text-gray-900 dark:text-gray-200" onClick={ handleAdd }>새 할일 추가</button>}
           </div>
           {/* Add New Card UI */}
@@ -88,7 +92,7 @@ function Body() {
                 return <Card title={title} description={description} user={user} createdAt={createdAt} subTodo={subTodo} subTodoKey={subTodoKey} key={cardId} />
             })}
           </div>
-          { searchValue.length > 0 ? (<div className="text-sm text-white">{searchResult.length} 개 결과가 검색되었어요!</div>) : null }
+          { searchValue.length > 0 ? (<div className="text-sm text-black dark:text-white">{searchResult.length} 개 결과가 검색되었어요!</div>) : null }
         </div>   
     );
   }
