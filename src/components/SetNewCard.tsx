@@ -31,7 +31,7 @@ function SetNewCard(props: any) {
     const day = d.getDate()
     const createdAt = (year + '-' + month + '-' + day)
 
-    dispatch(addTodo({ title: newCardTitle, description: newCardDescription, user: '두투두투', createdAt: createdAt, subTodoKey: 0}))
+    dispatch(addTodo({ cardId: 0, title: newCardTitle, description: newCardDescription, user: '두투두투', checked: false, createdAt: createdAt, subTodoKey: 0}))
     // disapear new card UI
     props.afterAdd()
     resetNewCardStates()
@@ -43,9 +43,9 @@ function SetNewCard(props: any) {
   }
   
   return (
-    <div className=" flex flex-col mt-6 mb-2 rounded bg-white dark:bg-gray-800 shadow-lg transform">
+    <div className=" flex flex-col mt-6 mb-2 rounded bg-white dark:bg-gray-700 shadow-lg transform">
       <div className="m-2">
-        <div className="flex mb-4 font-bold text-black dark:text-white">
+        <div className="flex mb-4 text-lg font-bold text-black dark:text-white">
           새 항목 추가
         </div>
         <div className="flex flex-col">
@@ -54,8 +54,8 @@ function SetNewCard(props: any) {
           <div className="mb-1 text-sm text-black dark:text-white">내용</div>
           <input className="flex mb-4 border-b bg-transparent text-black dark:text-white" onChange={ newCardDescriptionChange } value={ newCardDescription }/>
           <div className="flex flex-row">
-            <button className="h-5 overflow-hidden px-6 rounded text-sm bg-gradient-to-r from-teal-400 to-blue-400 text-white" onClick={ handleAddData }>추가</button>
-            <button className="h-5 overflow-hidden ml-2 px-6 rounded text-sm bg-gray-100 text-black" onClick={ handleCancleAddNew } >취소</button>
+            <button className="h-6 overflow-hidden px-6 rounded text-sm bg-teal-400 text-white" onClick={ handleAddData }>추가</button>
+            <button className="h-6 overflow-hidden ml-2 px-6 rounded text-sm bg-gray-100 text-black" onClick={ handleCancleAddNew } >취소</button>
           </div>
         </div>
       </div>
