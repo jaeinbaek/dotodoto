@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { delTodo } from "../actions";
+import { delTodo, checkTodo } from "../actions";
 import { CardProps, CardStates } from "../types/types";
 
 function Card({ cardId, title, description, user, createdAt, subTodo, checked, subTodoKey}:CardProps) {
@@ -15,16 +15,16 @@ function Card({ cardId, title, description, user, createdAt, subTodo, checked, s
   // Handle detail button event
   const handleDetail = ():void => setApearCardDetail(!apearCardDetail)
 
-  const handleCheck = () => {
-
+  const handleCheck = ():void => {
+    dispatch(checkTodo(cardId))
   }
 
-  const handleDelete = () => {
+  const handleDelete = ():void => {
     dispatch(delTodo(cardId))
   }
 
   return (
-        <div className="flex flex-row bg-white dark:bg-gray-700 mb-3 rounded shadow-lg transform hover:bg-gray-100 dark:hover:bg-gray-700">
+        <div className="flex flex-row bg-white dark:bg-gray-700 mb-3 rounded shadow-lg transform hover:bg-gray-100 dark:hover:bg-gray-600">
           {/* CheckBox Area */}
           <div className="w-1/12 flex justify-center items-center">
             <input 
@@ -34,7 +34,11 @@ function Card({ cardId, title, description, user, createdAt, subTodo, checked, s
             />
           </div>
           {/* Data Area */}
-          <div className="w-10/12 flex flex-col my-2 py-1">
+          <div 
+            className="w-10/12 flex flex-col my-2 py-1" 
+            onClick={handleDetail}
+          >
+            {/* Create date & delete button */}
             <div className="flex flex-row justify-between text-xs text-gray-500 dark:text-gray-200">
               <div className="text-xs text-gray-500 dark:text-gray-200">
                 {user}
@@ -52,24 +56,27 @@ function Card({ cardId, title, description, user, createdAt, subTodo, checked, s
                 }
               </div>
             </div>
-            <div className="font-bold text-black dark:text-white">
+            <div className=" font-bold text-black dark:text-white">
               {title}
             </div>
             {
               apearCardDetail && 
                 <div>
-                  <div className="ml-2 text-xs font-semibold text-black dark:text-white">
+                  <div className="ml-2 text-sm font-semibold text-black dark:text-white">
                     {description}
                   </div>
                   <hr className="my-2"/>
                     {subTodo?.map(({checked, value, subTodoKey}) => {
-                      return <div className="flex items-center h-5 text-xs text-black dark:text-white"><input className="mr-2" type="checkbox" checked={checked} key={subTodoKey}/>{value}</div>
+                      return <div className="flex items-center h-5 text-xs text-black font-semibold dark:text-white"><input className="mr-2" type="checkbox" checked={checked} key={subTodoKey}/>{value}</div>
                     })}
                 </div>
             }
           </div>
           {/* Detail Button */}
-          <div className="w-1/12 flex justify-center items-center">
+          <div 
+            className="w-1/12 flex justify-center items-center"
+            onClick={handleDetail}
+          >
             <img
               className="h-2"
               src="detail.png"
