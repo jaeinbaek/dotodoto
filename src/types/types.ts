@@ -10,7 +10,14 @@ export type CardProps = {
     subTodo?: any[];
 }
 
+export type alertType = {
+    value: string;
+    callback: any;
+    type: string;
+}
+
 export type CardStates = {
     lastCardId: number,
-    card: CardProps[]
+    card: CardProps[],
+    alert: alertType[]
 }

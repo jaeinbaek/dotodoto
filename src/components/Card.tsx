@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { delTodo, checkTodo } from "../actions";
+import { delTodo, checkTodo, addAlert } from "../actions";
 import { CardProps, CardStates } from "../types/types";
 
 function Card({ cardId, title, description, user, createdAt, subTodo, checked, subTodoKey}:CardProps) {
@@ -20,7 +20,8 @@ function Card({ cardId, title, description, user, createdAt, subTodo, checked, s
   }
 
   const handleDelete = ():void => {
-    dispatch(delTodo(cardId))
+    dispatch(addAlert({type:'check', value:'정말 삭제하시겠어요?', callback: dispatch(delTodo(cardId))}))
+  
   }
 
   return (

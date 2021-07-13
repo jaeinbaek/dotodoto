@@ -1,10 +1,11 @@
-import { CardProps } from '../types/types';
+import { alertType, CardProps } from '../types/types';
 import * as types from './ActionTypes';
 
 export type CardAction =
   | ReturnType<typeof addTodo>
   | ReturnType<typeof delTodo>
   | ReturnType<typeof checkTodo>
+  | ReturnType<typeof addAlert>
 
 
 // Action creator
@@ -21,4 +22,9 @@ export const delTodo = (cardId: number) => ({
 export const checkTodo = (cardId: number) => ({
   type: types.CHECK_TODO,
   payload: cardId
+});
+
+export const addAlert = (alert: alertType) => ({
+  type: types.ADD_ALERT,
+  payload: alert
 });
