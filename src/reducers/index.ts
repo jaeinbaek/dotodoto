@@ -1,11 +1,12 @@
 import { CardProps } from './../types/types';
 import { CardStates } from '../types/types';
-import { DEL_TODO, ADD_TODO, CHECK_TODO, ADD_ALERT } from './../actions/ActionTypes';
+import { DEL_TODO, ADD_TODO, CHECK_TODO, ADD_ALERT, DEL_ALERT, ADD_SUBTODO, DEL_SUBTODO } from './../actions/ActionTypes';
 import { CardAction } from './../actions/index';
 
 // Def init state
 const initialState: CardStates = {
   lastCardId: 1,
+  lastAlertId: 0,
   card: [
     {
     cardId: 1,
@@ -31,16 +32,7 @@ const initialState: CardStates = {
     }
   ],
   alert: [
-    {
-      type: 'alert',
-      value: 'Alert 테스트입니다',
-      callback: ''
-    },
-    {
-      type: 'check',
-      value: '정말 삭제하시겠어요?',
-      callback: ''
-    },
+    
   ]
 };
 
@@ -54,27 +46,63 @@ function cards(
           action.payload.cardId = state.lastCardId + 1
           return {
             lastCardId: state.lastCardId + 1,
+            lastAlertId: state.lastAlertId,
             card: [ ...state.card, action.payload ],
             alert: state.alert
           }
         case DEL_TODO:
-          const del_result = state.card.filter(element => element.cardId != action.payload)
+          const delCardResult = state.card.filter(element => element.cardId != action.payload)
           return {
             lastCardId: state.lastCardId,
-            card: [ ...del_result ],
+            lastAlertId: state.lastAlertId,
+            card: [ ...delCardResult ],
             alert: state.alert
           }
         case CHECK_TODO:
+          // 미완
           return {
             lastCardId: state.lastCardId,
+            lastAlertId: state.lastAlertId,
             card: [ ],
             alert: state.alert
           }
-        case ADD_ALERT:
+        case ADD_SUBTODO:
+          // 미완
+          let {cardId, subTodoData} = action.payload
           return {
             lastCardId: state.lastCardId,
+            lastAlertId: state.lastAlertId,
             card: state.card,
-            alert: [ ...state.alert, action.payload ]
+            alert: state.alert
+          }
+        case DEL_SUBTODO:
+          // 미완
+          return {
+            lastCardId: state.lastCardId,
+            lastAlertId: state.lastAlertId,
+            card: state.card,
+            alert: state.alert
+          } 
+        case ADD_ALERT:
+          action.payload.alertId = state.lastAlertId + 1
+          let copyOfAlert = state.alert
+          // Keep number of alert 2
+          if (copyOfAlert.length > 1) {
+            copyOfAlert.shift()
+          }
+          return {
+            lastCardId: state.lastCardId,
+            lastAlertId: state.lastAlertId + 1,
+            card: state.card,
+            alert: [ ...copyOfAlert, action.payload ]
+          }
+        case DEL_ALERT:
+          const delAlertResult = state.alert.filter(element => element.alertId != action.payload)
+          return {
+            lastCardId: state.lastCardId,
+            lastAlertId: state.lastAlertId,
+            card: state.card,
+            alert: [ ...delAlertResult ]
           }
         default:
             return state

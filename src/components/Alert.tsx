@@ -1,11 +1,22 @@
-import { isPropertySignature } from "typescript";
-import { alertType } from "../types/types";
+import { useDispatch, useSelector } from "react-redux";
+import { delAlert, delTodo } from "../actions";
+import { alertType, CardStates } from "../types/types";
 
 
-function Alert({type, value, callback}:alertType) {
+function Alert({alertId, type, value, cardId}:alertType) {
 
-    const handleCheckOk = ():void => {
-        callback()
+    const alerts = useSelector((state: CardStates) => state.alert)
+    const dispatch = useDispatch()
+
+    const handleCheck = ():void => {
+        if (cardId) {
+            dispatch(delTodo(cardId))
+        }
+        dispatch(delAlert(alertId))
+    }
+
+    const handleCancel = ():void => {
+        dispatch(delAlert(alertId))
     }
 
     return (
@@ -17,12 +28,15 @@ function Alert({type, value, callback}:alertType) {
               <div className="w-1/5">
                 { type == 'check' ? 
                     <div className="flex justify-end">
-                        <button className="h-6 mr-2 px-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-white text-sm rounded-full">
+                        <button 
+                            className="h-6 mr-2 px-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-white text-sm rounded-full"
+                            onClick={handleCancel}
+                        >
                             취소
                         </button>
                         <button 
                             className="h-6 mr-4 px-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-rose-500 text-sm rounded-full"
-                            onClick={handleCheckOk}
+                            onClick={handleCheck}
                         >
                             확인
                         </button>

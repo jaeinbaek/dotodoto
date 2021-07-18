@@ -8,19 +8,31 @@ function Card({ cardId, title, description, user, createdAt, subTodo, checked, s
   const cards = useSelector((state: CardStates) => state.card)
   const dispatch = useDispatch()
 
-
   // State for show card detail
   const [apearCardDetail, setApearCardDetail] = useState<boolean>(false)
-
   // Handle detail button event
   const handleDetail = ():void => setApearCardDetail(!apearCardDetail)
 
+  // Subtodo
+  const [newSubtodo, setNewSubtodo] = useState<string>('')
+  // Handle change newSubTodo value
+  const changeNewSubTodo = (e:any):void => {
+    setNewSubtodo(e.target.value)
+  }
+  // Handle press enter on new subtodo input
+  const handleAddNewSubTodo = (e:any):void => {
+    if (e.key == 'Enter') {
+      
+    }
+  }
+  
+  // Handle check button
   const handleCheck = ():void => {
     dispatch(checkTodo(cardId))
   }
 
   const handleDelete = ():void => {
-    dispatch(addAlert({type:'check', value:'정말 삭제하시겠어요?', callback: dispatch(delTodo(cardId))}))
+    dispatch(addAlert({alertId: 0, type:'check', value:'정말 삭제하시겠어요?', cardId: cardId}))
   
   }
 
@@ -33,11 +45,11 @@ function Card({ cardId, title, description, user, createdAt, subTodo, checked, s
               className="checked:bg-red-600 checked:border-transparent"
               onChange={handleCheck}
             />
-          </div>
+          </div>  
           {/* Data Area */}
           <div 
             className="w-10/12 flex flex-col my-2 py-1" 
-            onClick={handleDetail}
+            // onClick={handleDetail}
           >
             {/* Create date & delete button */}
             <div className="flex flex-row justify-between text-xs text-gray-500 dark:text-gray-200">
@@ -66,10 +78,37 @@ function Card({ cardId, title, description, user, createdAt, subTodo, checked, s
                   <div className="ml-2 text-sm font-semibold text-black dark:text-white">
                     {description}
                   </div>
+                  {/* Subtodo hr */}
                   <hr className="my-2"/>
-                    {subTodo?.map(({checked, value, subTodoKey}) => {
-                      return <div className="flex items-center h-5 text-xs text-black font-semibold dark:text-white"><input className="mr-2" type="checkbox" checked={checked} key={subTodoKey}/>{value}</div>
-                    })}
+                  {/* New Subtodo */}
+                  <div 
+                    className="flex items-center h-5 text-xs text-black font-semibold dark:text-white"
+                    onClick={ () => {} }
+                  >
+                    <input
+                      className="mr-2" 
+                      type="checkbox"
+                      disabled
+                    />
+                    <input 
+                      type="text"
+                      value={newSubtodo}
+                      placeholder="여길 눌러 입력하세요"
+                      onChange={ changeNewSubTodo }
+                      onKeyPress={ handleAddNewSubTodo }
+                      onClick={ () => {} }
+                      className="border-b border-none rounded bg-transparent border border-transparent text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent"
+                    />
+                  </div>
+                  {subTodo?.map(({checked, value}) => {
+                    return <div className="flex items-center h-5 text-xs text-black font-semibold dark:text-white"><input className="mr-2" type="checkbox" checked={checked}/>{value}</div>
+                  })}
+                  {/* Tags hr */}
+                  <hr className="my-2"/>
+                  <button className="max-w-xs overflow-hidden mb-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">태그지롱</button>
+                  <button className="max-w-xs overflow-hidden mb-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">태그지롱</button>
+                  <button className="max-w-xs overflow-hidden mb-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">태그지롱</button>
+                  <button className="max-w-xs overflow-hidden mb-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">태그지롱</button>
                 </div>
             }
           </div>

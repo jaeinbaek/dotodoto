@@ -8,13 +8,13 @@ function SetNewCard(props: any) {
 
   // New card states
   const [newCardTitle, setNewCardTitle] = useState<string>('')
-  const [newCardDescription, setNewCardDescription] = useState<string>('')
+  const [newCardDescription, setNewCardDescription] = useState<string>('설명을 입력해보세요!')
 
   // Handleing new card values
-  const newCardTitleChange = (e:any):void => {
+  const changeNewnewCardTitle = (e:any):void => {
     setNewCardTitle(e.target.value)
   }
-  const newCardDescriptionChange = (e:any):void => {
+  const changeNewCardDescription = (e:any):void => {
     setNewCardDescription(e.target.value)
   };
 
@@ -43,23 +43,47 @@ function SetNewCard(props: any) {
   }
   
   return (
-    <div className=" flex flex-col mb-2 rounded bg-white dark:bg-gray-700 shadow-lg transform">
-      <div className="m-2">
-        <div className="flex mb-4 text-lg font-bold text-black dark:text-white">
+    <div className="flex flex-row bg-white dark:bg-gray-700 mb-3 rounded shadow-lg transform hover:bg-gray-100 dark:hover:bg-gray-600">
+    {/* CheckBox Area */}
+    <div className="w-1/12 flex justify-center items-center">
+      <input 
+        type="checkbox" 
+        className="checked:bg-red-600 checked:border-transparent"
+        disabled
+      />
+    </div>
+    {/* Data Area */}
+    <div 
+      className="w-10/12 flex flex-col my-2 py-1" 
+    >
+      {/* Create date & delete button */}
+      <div className="flex flex-row justify-between text-xs text-gray-500 dark:text-gray-200">
+        <div className="text-xs text-gray-500 dark:text-gray-200">
           새 항목 추가
         </div>
-        <div className="flex flex-col">
-          <div className="mb-1 text-sm text-black dark:text-white">제목</div>
-          <input className="flex mb-2 border-b bg-transparent text-black dark:text-white" onChange={ newCardTitleChange } value={ newCardTitle }/>
-          <div className="mb-1 text-sm text-black dark:text-white">내용</div>
-          <input className="flex mb-4 border-b bg-transparent text-black dark:text-white" onChange={ newCardDescriptionChange } value={ newCardDescription }/>
-          <div className="flex flex-row">
-            <button className="h-6 overflow-hidden px-6 rounded-full text-sm bg-gray-100 dark:bg-gray-500 hover:bg-gray-200 dark:hover:bg-gray-400 text-gray-900 dark:text-white" onClick={ handleAddData }>추가</button>
-            <button className="h-6 overflow-hidden ml-2 px-6 rounded-full bg-gray-100 dark:bg-gray-500 text-sm hover:bg-gray-200 dark:hover:bg-gray-400 text-gray-900 dark:text-white" onClick={ handleCancleAddNew } >취소</button>
-          </div>
-        </div>
       </div>
-    </div> 
+      <div className=" font-bold text-black dark:text-white">
+        <input
+          value={newCardTitle}
+          onChange={changeNewnewCardTitle}
+          className="w-2/3 px-1 border-b border-none rounded bg-transparent border border-transparent text-black font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent"
+          type="text"
+          placeholder="제목을 입력하세요"  
+        />
+      </div>
+    </div>
+    {/* Detail Button */}
+    <div 
+      className="w-1/12 flex justify-center items-center"
+    >
+      <button 
+        className="h-6 mr-4 px-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-white text-sm rounded-full"
+        onClick={handleAddData}
+      >
+        확인
+      </button>
+    </div>
+  </div> 
   );
 }
 

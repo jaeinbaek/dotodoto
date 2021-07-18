@@ -68,7 +68,7 @@ function Body() {
           <div className="my-2 flex flex-row justify-between">
             <div className="flex flex-row items-center h-6 w-1/2">
               <input 
-                  className="px-1 border-b border-none rounded bg-transparent border border-transparent text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent " 
+                  className="px-1 border-b border-none rounded bg-transparent border border-transparent text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent" 
                   placeholder="🔎 제목 검색"
                   onChange={searchValueChange}
                   value={searchValue}
@@ -87,7 +87,7 @@ function Body() {
           { apearNewCard && <SetNewCard afterAdd={afterAdd} /> }
           
           {/* Cards */}
-          <div>
+          <div className="flex flex-col-reverse">
             {searchResult.map(({cardId, title, description, user, createdAt, checked, subTodoKey, subTodo}) => {
                 return <Card cardId={cardId} title={title} description={description} user={user} createdAt={createdAt} subTodo={subTodo} checked={checked} subTodoKey={subTodoKey} key={cardId} />
             })}

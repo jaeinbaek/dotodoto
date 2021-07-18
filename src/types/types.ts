@@ -11,13 +11,15 @@ export type CardProps = {
 }
 
 export type alertType = {
+    alertId: number;
     value: string;
-    callback: any;
+    cardId?: number;
     type: string;
 }
 
 export type CardStates = {
     lastCardId: number,
+    lastAlertId: number,
     card: CardProps[],
     alert: alertType[]
 }

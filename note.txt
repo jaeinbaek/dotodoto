@@ -1,6 +1,6 @@
-1. 모달 창 구현 -> Footer
+1. 모달 창 구현 -> Footer --- v
 
-2. 새 항목 기능/Subtodo 추가 기능 UI 통일
+2. 새 항목 기능/Subtodo 추가 기능 UI 통일 --- v
 
 3. Check Reducer 구현
 

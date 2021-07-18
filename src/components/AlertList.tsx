@@ -9,8 +9,8 @@ function AlertList() {
 
     return (
           // <div className="fixed bottom-0 flex-none w-full h-20 bg-gradient-to-t from-gray-800 to-transparent"/>
-          <div className="w-full max-w-xl mx-7 flex flex-col justify-center">
-              { alerts.map(({ type, value, callback }) => { return <Alert type={type} value={value} callback={callback} /> })}
+          <div className="w-full max-w-xl mx-7 pb-3 flex flex-col-reverse justify-centet">
+              { alerts.map(({ alertId, type, value, cardId }) => { return <Alert alertId={alertId} type={type} value={value} cardId={cardId} /> })}
           </div>
     );
   }
