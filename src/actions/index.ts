@@ -7,8 +7,10 @@ export type CardAction =
   | ReturnType<typeof checkTodo>
   | ReturnType<typeof addSubTodo>
   | ReturnType<typeof delSubTodo>
+  | ReturnType<typeof checkSubTodo>
   | ReturnType<typeof addAlert>
   | ReturnType<typeof delAlert>
+  | ReturnType<typeof switchApearDetail>
 
 
 // Action creator
@@ -27,9 +29,9 @@ export const checkTodo = (cardId: number) => ({
   payload: cardId
 });
 
-export const addSubTodo = (cardId: number, subTodoData: any) => ({
+export const addSubTodo = (cardId: number, subTodoValue: any) => ({
   type: types.ADD_SUBTODO,
-  payload: {cardId, subTodoData}
+  payload: {cardId, subTodoValue}
 });
 
 export const delSubTodo = (cardId: number, subTodoId: number) => ({
@@ -37,12 +39,22 @@ export const delSubTodo = (cardId: number, subTodoId: number) => ({
   payload: {cardId, subTodoId}
 });
 
-export const addAlert = (alert: alertType) => ({
+export const checkSubTodo = (cardId: number, subTodoKey: number) => ({
+  type: types.CHECK_SUBTODO,
+  payload: {cardId, subTodoKey}
+})
+
+export const addAlert = (type:string, value:string, cardId?:number) => ({
   type: types.ADD_ALERT,
-  payload: alert
+  payload: {type, value, cardId}
 });
 
 export const delAlert = (alertId: number) => ({
   type: types.DEL_ALERT,
   payload: alertId
+})
+
+export const switchApearDetail = (cardId: number) => ({
+  type: types.SWITCH_APEARDETAIL,
+  payload: cardId
 })

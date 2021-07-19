@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addTodo } from "../actions";
+import { addAlert, addTodo } from "../actions";
 
 function SetNewCard(props: any) {
   // Use redux
@@ -31,10 +31,17 @@ function SetNewCard(props: any) {
     const day = d.getDate()
     const createdAt = (year + '-' + month + '-' + day)
 
-    dispatch(addTodo({ cardId: 0, title: newCardTitle, description: newCardDescription, user: '두투두투', checked: false, createdAt: createdAt, subTodoKey: 0}))
+    dispatch(addTodo({ cardId: 0, title: newCardTitle, description: newCardDescription, user: '두투두투', checked: false, apearCardDetail: false, createdAt: createdAt, lastSubTodoKey: 0, subTodo: []}))
     // disapear new card UI
     props.afterAdd()
+    dispatch(addAlert('notice', '할 일이 추가되었어요!'))
     resetNewCardStates()
+  }
+
+  const handleAddEnter = (e:any):void => {
+    if (e.key == 'Enter') {
+      handleAddData()
+    }
   }
 
   const handleCancleAddNew = ():void => {
@@ -54,7 +61,7 @@ function SetNewCard(props: any) {
     </div>
     {/* Data Area */}
     <div 
-      className="w-10/12 flex flex-col my-2 py-1" 
+      className="w-3/4 flex flex-col my-2 py-1" 
     >
       {/* Create date & delete button */}
       <div className="flex flex-row justify-between text-xs text-gray-500 dark:text-gray-200">
@@ -66,6 +73,7 @@ function SetNewCard(props: any) {
         <input
           value={newCardTitle}
           onChange={changeNewnewCardTitle}
+          onKeyPress={ handleAddEnter }
           className="w-2/3 px-1 border-b border-none rounded bg-transparent border border-transparent text-black font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent"
           type="text"
           placeholder="제목을 입력하세요"  
@@ -74,10 +82,16 @@ function SetNewCard(props: any) {
     </div>
     {/* Detail Button */}
     <div 
-      className="w-1/12 flex justify-center items-center"
+      className="w-1/6 flex justify-center items-center"
     >
       <button 
-        className="h-6 mr-4 px-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-white text-sm rounded-full"
+          className="h-6 mr-2 px-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-rose-500 text-sm rounded-full"
+          onClick={handleCancleAddNew}
+      >
+          취소
+      </button>
+      <button 
+        className="h-6 px-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-white text-sm rounded-full"
         onClick={handleAddData}
       >
         확인

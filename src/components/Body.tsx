@@ -88,13 +88,24 @@ function Body() {
           
           {/* Cards */}
           <div className="flex flex-col-reverse">
-            {searchResult.map(({cardId, title, description, user, createdAt, checked, subTodoKey, subTodo}) => {
-                return <Card cardId={cardId} title={title} description={description} user={user} createdAt={createdAt} subTodo={subTodo} checked={checked} subTodoKey={subTodoKey} key={cardId} />
+            {searchResult.map(({cardId, title, description, user, createdAt, checked, apearCardDetail, lastSubTodoKey, subTodo}) => {
+                return <Card cardId={cardId} title={title} description={description} user={user} createdAt={createdAt} subTodo={subTodo} checked={checked} apearCardDetail={apearCardDetail} lastSubTodoKey={lastSubTodoKey} key={cardId} />
             })}
           </div>
-          { searchValue.length > 0 ? (<div className="text-sm text-black dark:text-white">{searchResult.length} 개 결과가 검색되었어요!</div>) : null }
+          { searchValue.length == 0 && searchResult.length == 0 && apearNewCard == false
+            ? 
+              <div className="text-sm text-black dark:text-white">
+              아무 할일이 없어요! <b>새 할일 추가</b> 버튼을 눌러 만들어보세요
+              </div>
+            : null }
+          { searchValue.length > 0 
+            ? 
+              <div className="text-sm text-black dark:text-white">
+                {searchResult.length} 개 결과가 검색되었어요!
+              </div> 
+            : null }
         </div>   
     );
   }
 
-export default Body; 
+export default Body;

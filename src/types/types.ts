@@ -6,8 +6,16 @@ export type CardProps = {
     user: string;
     createdAt: string;
     checked: boolean,
+    apearCardDetail: boolean,
+    lastSubTodoKey: number;
+    subTodo: any[];
+}
+
+export type subTodoProps = {
+    cardId: number;
     subTodoKey: number;
-    subTodo?: any[];
+    value: string;
+    checked: boolean;
 }
 
 export type alertType = {

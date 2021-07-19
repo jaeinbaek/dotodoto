@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { delAlert, delTodo } from "../actions";
 import { alertType, CardStates } from "../types/types";
@@ -7,6 +9,22 @@ function Alert({alertId, type, value, cardId}:alertType) {
 
     const alerts = useSelector((state: CardStates) => state.alert)
     const dispatch = useDispatch()
+
+    const [alertType, setAlertType] = useState<string>('')
+
+    useEffect(() => {
+        switch (type) {
+            case 'delete':
+                setAlertType('check')
+                break
+            case 'notice':
+                setAlertType('notice')
+                break
+            default:
+                setAlertType('notice')
+                break
+        }
+    })
 
     const handleCheck = ():void => {
         if (cardId) {
@@ -26,7 +44,7 @@ function Alert({alertId, type, value, cardId}:alertType) {
                 {value}
               </div>
               <div className="w-1/5">
-                { type == 'check' ? 
+                { alertType == 'check' ? 
                     <div className="flex justify-end">
                         <button 
                             className="h-6 mr-2 px-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-white text-sm rounded-full"
@@ -43,7 +61,10 @@ function Alert({alertId, type, value, cardId}:alertType) {
                     </div>
                     :
                     <div className="flex justify-end">
-                        <button className="h-6 mr-4 px-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-white text-sm rounded-full">
+                        <button 
+                            className="h-6 mr-4 px-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-white text-sm rounded-full"
+                            onClick={handleCancel}
+                        >
                             확인
                         </button>
                     </div>
