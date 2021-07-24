@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addAlert, addTodo } from "../actions";
+import { addAlert, addTodo, delSubTodo } from "../actions";
 
 function SetNewCard(props: any) {
   // Use redux
@@ -8,10 +8,10 @@ function SetNewCard(props: any) {
 
   // New card states
   const [newCardTitle, setNewCardTitle] = useState<string>('')
-  const [newCardDescription, setNewCardDescription] = useState<string>('설명을 입력해보세요!')
+  const [newCardDescription, setNewCardDescription] = useState<string>('')
 
   // Handleing new card values
-  const changeNewnewCardTitle = (e:any):void => {
+  const changeNewCardTitle = (e:any):void => {
     setNewCardTitle(e.target.value)
   }
   const changeNewCardDescription = (e:any):void => {
@@ -31,7 +31,21 @@ function SetNewCard(props: any) {
     const day = d.getDate()
     const createdAt = (year + '-' + month + '-' + day)
 
-    dispatch(addTodo({ cardId: 0, title: newCardTitle, description: newCardDescription, user: '두투두투', checked: false, apearCardDetail: false, createdAt: createdAt, lastSubTodoKey: 0, subTodo: []}))
+    dispatch(addTodo(
+      { 
+        cardId: 0,
+        title: newCardTitle,
+        description: newCardDescription,
+        user: '두투두투',
+        checked: false,
+        apearCardDetail: false,
+        createdAt: createdAt,
+        lastSubTodoKey: 0,
+        subTodo: [],
+        lastTagKey: 0,
+        tag: []
+      }
+    ))
     // disapear new card UI
     props.afterAdd()
     dispatch(addAlert('notice', '할 일이 추가되었어요!'))
@@ -64,7 +78,7 @@ function SetNewCard(props: any) {
       className="w-3/4 flex flex-col my-2 py-1" 
     >
       {/* Create date & delete button */}
-      <div className="flex flex-row justify-between text-xs text-gray-500 dark:text-gray-200">
+      <div className="flex flex-row justify-between mb-1 text-xs text-gray-500 dark:text-gray-200">
         <div className="text-xs text-gray-500 dark:text-gray-200">
           새 항목 추가
         </div>
@@ -72,12 +86,23 @@ function SetNewCard(props: any) {
       <div className=" font-bold text-black dark:text-white">
         <input
           value={newCardTitle}
-          onChange={changeNewnewCardTitle}
-          onKeyPress={ handleAddEnter }
+          onChange={changeNewCardTitle}
           className="w-2/3 px-1 border-b border-none rounded bg-transparent border border-transparent text-black font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent"
           type="text"
           placeholder="제목을 입력하세요"  
         />
+      </div>
+      <div>
+        <div className="ml-2 text-sm font-semibold text-black dark:text-white">
+          <input
+            value={newCardDescription}
+            onChange={changeNewCardDescription}
+            onKeyPress={ handleAddEnter }
+            className="w-2/3 px-1 border-b border-none rounded bg-transparent border border-transparent text-black font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent"
+            type="text"
+            placeholder="제목을 입력하세요"  
+          />
+        </div>
       </div>
     </div>
     {/* Detail Button */}

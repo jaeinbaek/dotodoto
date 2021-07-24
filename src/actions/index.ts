@@ -8,6 +8,8 @@ export type CardAction =
   | ReturnType<typeof addSubTodo>
   | ReturnType<typeof delSubTodo>
   | ReturnType<typeof checkSubTodo>
+  | ReturnType<typeof addTag>
+  | ReturnType<typeof delTag>
   | ReturnType<typeof addAlert>
   | ReturnType<typeof delAlert>
   | ReturnType<typeof switchApearDetail>
@@ -37,6 +39,16 @@ export const addSubTodo = (cardId: number, subTodoValue: any) => ({
 export const delSubTodo = (cardId: number, subTodoId: number) => ({
   type: types.DEL_SUBTODO,
   payload: {cardId, subTodoId}
+});
+
+export const addTag = (cardId: number, tagValue: any) => ({
+  type: types.ADD_TAG,
+  payload: {cardId, tagValue}
+});
+
+export const delTag = (cardId: number, tagId: number) => ({
+  type: types.DEL_TAG,
+  payload: {cardId, tagId}
 });
 
 export const checkSubTodo = (cardId: number, subTodoKey: number) => ({

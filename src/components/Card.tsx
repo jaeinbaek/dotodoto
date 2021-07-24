@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { delTodo, checkTodo, addAlert, addSubTodo, checkSubTodo, switchApearDetail } from "../actions";
-import { CardProps, CardStates } from "../types/types";
+import { delTodo, checkTodo, addAlert, addSubTodo, checkSubTodo, switchApearDetail, addTag } from "../actions";
+import { CardProps, CardStates, subTodoProps } from "../types/types";
 import SubTodo from "./SubTodo";
+import Tag from "./Tag";
 
-function Card({cardId, title, description, user, createdAt, checked, apearCardDetail, lastSubTodoKey, subTodo}:CardProps) {
+function Card({cardId, title, description, user, createdAt, checked, apearCardDetail, lastSubTodoKey, subTodo, lastTagKey, tag}:CardProps) {
   // Use redux
   const dispatch = useDispatch()
 
@@ -12,21 +13,33 @@ function Card({cardId, title, description, user, createdAt, checked, apearCardDe
   const handleDetail = ():void => {
     dispatch(switchApearDetail(cardId))
   }
+
   // Subtodo
-  const [newSubtodo, setNewSubtodo] = useState<string>('')
+  const [sortedSubTodo, setSortedSubTodo] = useState<subTodoProps[]>([])
+  const [newSubTodo, setNewSubTodo] = useState<string>('')
   // Handle change newSubTodo value
-  const changeNewSubTodo = (e:any):void => {
-    setNewSubtodo(e.target.value)
+  const changeNewSubTodo: React.ChangeEventHandler<HTMLInputElement> = (e):void => {
+    setNewSubTodo(e.target.value)
   }
   // Handle press enter on new subtodo input
   const handleAddNewSubTodo = (e:any):void => {
     if (e.key == 'Enter') {
-      dispatch(addSubTodo(cardId, newSubtodo))
+      dispatch(addSubTodo(cardId, newSubTodo))
     }
   }
-  // Handle subtodo check
-  const handleSubTodoCheck = (e:any):void => {
-    dispatch(checkSubTodo(cardId, e.subTodoKey))
+
+  // Tag
+  const [sortedTag, setSortedTag] = useState<subTodoProps[]>([])
+  const [newTag, setNewTag] = useState<string>('')
+  // Handle change newTag value
+  const changeNewTag = (e:any):void => {
+    setNewTag(e.target.value)
+  }
+  // Handle press enter on new subtodo input
+  const handleAddNewTag = (e:any):void => {
+    if (e.key == 'Enter') {
+      dispatch(addTag(cardId, newTag))
+    }
   }
   
   // Handle check button
@@ -38,6 +51,17 @@ function Card({cardId, title, description, user, createdAt, checked, apearCardDe
     dispatch(addAlert('delete', '정말 삭제하시겠어요?', cardId))
   
   }
+
+  // Searchresult update when cards change
+  useEffect(() => {
+    const sortSubTodo = subTodo.sort((a, b) => a.subTodoKey - b.subTodoKey)
+    setSortedSubTodo(sortSubTodo)
+  },[subTodo])
+
+  useEffect(() => {
+    const sortTag = tag.sort((a, b) => a.tagKey - b.tagKey)
+    setSortedSubTodo(sortTag)
+  },[tag])
 
   return (
     <div className="flex flex-row bg-white dark:bg-gray-700 mb-3 rounded shadow-lg transform hover:bg-gray-100 dark:hover:bg-gray-600">
@@ -52,10 +76,10 @@ function Card({cardId, title, description, user, createdAt, checked, apearCardDe
       </div>  
       {/* Data Area */}
       <div 
-        className="w-10/12 flex flex-col my-2 py-1" 
+        className="w-10/12 flex flex-col my-2 py-2" 
       >
         {/* Create date & delete button */}
-        <div className="flex flex-row justify-between text-xs text-gray-500 dark:text-gray-200">
+        <div className="flex flex-row justify-between mb-1 text-xs text-gray-500 dark:text-gray-200">
           <div className="text-xs text-gray-500 dark:text-gray-200">
             {user}
             {apearCardDetail && ` create at ${createdAt}`}
@@ -64,7 +88,7 @@ function Card({cardId, title, description, user, createdAt, checked, apearCardDe
           <div>
             {apearCardDetail &&
               <button 
-                className="px-2 text-rose-500 rounded-full text-xs font-semibold hover:underline hover:bg-gray-200 dark:hover:bg-gray-700"
+                className="px-2 text-rose-500 rounded-full text-xs font-semibold hover:bg-gray-200 dark:hover:bg-gray-700"
                 onClick={handleDelete}
               >
                 삭제
@@ -95,7 +119,7 @@ function Card({cardId, title, description, user, createdAt, checked, apearCardDe
                 />
                 <input 
                   type="text"
-                  value={newSubtodo}
+                  value={newSubTodo}
                   placeholder="여길 눌러 입력하세요"
                   onChange={ changeNewSubTodo }
                   onKeyPress={ handleAddNewSubTodo }
@@ -103,21 +127,27 @@ function Card({cardId, title, description, user, createdAt, checked, apearCardDe
                   className="border-b border-none rounded bg-transparent border border-transparent text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent"
                 />
               </div>
-              {subTodo.map(({subTodoKey, value, checked}) => {
-                return <SubTodo cardId={cardId} subTodoKey={subTodoKey} value={value} checked={checked} key={subTodoKey}/>
+              {sortedSubTodo.map(({subTodoKey, value, checked}) => {
+                return <SubTodo
+                  cardId={cardId}
+                  subTodoKey={subTodoKey}
+                  value={value}
+                  checked={checked}
+                  key={subTodoKey}
+                />
               })}
               {/* Tags hr */}
               <hr className="my-2"/>
-              <button className="max-w-xs overflow-hidden mb-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">태그지롱</button>
-              <button className="max-w-xs overflow-hidden mb-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">태그지롱</button>
-              <button className="max-w-xs overflow-hidden mb-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">태그지롱</button>
-              <button className="max-w-xs overflow-hidden mb-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">태그지롱</button>
+              <button className="max-w-xs overflow-hidden my-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">태그지롱</button>
+              <button className="max-w-xs overflow-hidden my-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">태그지롱</button>
+              <button className="max-w-xs overflow-hidden my-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">태그지롱</button>
+              <button className="max-w-xs overflow-hidden my-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">태그지롱</button>
             </div>
         }
       </div>
       {/* Detail Button */}
-      <div 
-        className="w-1/12 flex justify-center items-center"
+      <div
+        className={"w-1/12 flex justify-center items-center" + (apearCardDetail ? ' transform rotate-180' : ' transform rotate-0') }
         onClick={handleDetail}
       >
         <img

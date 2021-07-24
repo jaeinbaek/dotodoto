@@ -9,6 +9,8 @@ export type CardProps = {
     apearCardDetail: boolean,
     lastSubTodoKey: number;
     subTodo: any[];
+    lastTagKey: number;
+    tag: any[];
 }
 
 export type subTodoProps = {
@@ -16,6 +18,12 @@ export type subTodoProps = {
     subTodoKey: number;
     value: string;
     checked: boolean;
+}
+
+export type tagProps = {
+    cardId : number;
+    tagKey : number;
+    value : string;
 }
 
 export type alertType = {

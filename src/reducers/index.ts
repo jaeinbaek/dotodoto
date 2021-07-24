@@ -1,7 +1,7 @@
 import { CardProps } from './../types/types';
-import { CardStates } from '../types/types';
-import { DEL_TODO, ADD_TODO, CHECK_TODO, ADD_ALERT, DEL_ALERT, ADD_SUBTODO, DEL_SUBTODO, CHECK_SUBTODO, SWITCH_APEARDETAIL } from './../actions/ActionTypes';
-import { CardAction, checkSubTodo } from './../actions/index';
+import { CardStates, subTodoProps } from '../types/types';
+import { DEL_TODO, ADD_TODO, CHECK_TODO,  ADD_SUBTODO, DEL_SUBTODO, CHECK_SUBTODO, ADD_TAG, DEL_TAG, ADD_ALERT, DEL_ALERT, SWITCH_APEARDETAIL } from './../actions/ActionTypes';
+import { CardAction, checkSubTodo, delSubTodo } from './../actions/index';
 
 // Def init state
 const initialState: CardStates = {
@@ -29,8 +29,24 @@ const initialState: CardStates = {
           checked: false,
           value: '내용 채우기'
         }
+      ],
+    lastTagKey: 2,
+    tag:
+      [
+        {
+          tagKey: 0,
+          value: '몰라'
+        },
+        {
+          tagKey: 1,
+          value: '몰라'
+        },
+        {
+          tagKey: 2,
+          value: '몰라'
+        },
       ]
-    }
+    },
   ],
   alert: [
     
@@ -51,6 +67,7 @@ function cards(
             card: [ ...state.card, action.payload ],
             alert: state.alert
           }
+
         case DEL_TODO:
           const delCardResult = state.card.filter(element => element.cardId != action.payload)
           return {
@@ -59,6 +76,7 @@ function cards(
             card: [ ...delCardResult ],
             alert: state.alert
           }
+
         case CHECK_TODO:
           let checkCardIndex = state.card.findIndex((element) => element.cardId == action.payload)
           let checkCard = state.card[checkCardIndex]
@@ -73,6 +91,7 @@ function cards(
             card: [ ...checkCards, checkCard ],
             alert: state.alert
           }
+
         case ADD_SUBTODO:
           // Card to add subtodo
           let addSubTodoCardIndex = state.card.findIndex((element) => element.cardId == action.payload.cardId)
@@ -95,14 +114,22 @@ function cards(
             card: [ ...addSubTodoCards, addSubTodoCard ],
             alert: state.alert
           }
+
         case DEL_SUBTODO:
-          // 미완
+          // Card to delete subtodo
+          let delSubTodoCardIndex = state.card.findIndex((element) => element.cardId == action.payload.cardId)
+          let delSubTodoCard = state.card[delSubTodoCardIndex]
+          delSubTodoCard.subTodo = delSubTodoCard.subTodo.filter((element) => { return element.subTodoKey != action.payload.subTodoId })
+          // Splice old card from clone state
+          let delSubTodoCards = state.card
+          delSubTodoCards.splice(delSubTodoCardIndex, 1)
           return {
             lastCardId: state.lastCardId,
             lastAlertId: state.lastAlertId,
-            card: state.card,
+            card: [ ...delSubTodoCards, delSubTodoCard ],
             alert: state.alert
           }
+
         case CHECK_SUBTODO:
           // Card to add subtodo
           let checkSubTodoCardIndex = state.card.findIndex((element) => element.cardId == action.payload.cardId)
@@ -126,6 +153,45 @@ function cards(
             card: [ ...checkSubTodoCards, checkSubTodoCard ],
             alert: state.alert
           }
+        
+        case ADD_TAG:
+          // Card to add tag
+          let addTagCardIndex = state.card.findIndex((element) => element.cardId == action.payload.cardId)
+          let addTagCard = state.card[addTagCardIndex]
+          // New tag obj
+          let newTag = {
+            TagKey: addTagCard.lastTagKey + 1,
+            checked : false,
+            value: action.payload.tagValue
+          }
+          addTagCard.lastTagKey ++
+          // Push new tag to clone of card state
+          addTagCard.tag?.push(newTag)
+          // Splice old card from clone state
+          let addTagCards = state.card
+          addTagCards.splice(addTagCardIndex, 1)
+          return {
+            lastCardId: state.lastCardId,
+            lastAlertId: state.lastAlertId,
+            card: [ ...addTagCards, addTagCard ],
+            alert: state.alert
+          }
+
+        case DEL_TAG:
+          // Card to delete tag
+          let delTagCardIndex = state.card.findIndex((element) => element.cardId == action.payload.cardId)
+          let delTagCard = state.card[delTagCardIndex]
+          delTagCard.subTodo = delTagCard.subTodo.filter((element) => { return element.subTodoKey != action.payload.tagId })
+          // Splice old card from clone state
+          let delTagCards = state.card
+          delTagCards.splice(delTagCardIndex, 1)
+          return {
+            lastCardId: state.lastCardId,
+            lastAlertId: state.lastAlertId,
+            card: [ ...delTagCards, delTagCard ],
+            alert: state.alert
+          }
+
         case ADD_ALERT:
           let newAlert = {
             alertId: state.lastAlertId + 1,
@@ -144,6 +210,7 @@ function cards(
             card: state.card,
             alert: [ ...copyOfAlert, newAlert ]
           }
+
         case DEL_ALERT:
           const delAlertResult = state.alert.filter(element => element.alertId != action.payload)
           return {
@@ -152,6 +219,7 @@ function cards(
             card: state.card,
             alert: [ ...delAlertResult ]
           }
+
         case SWITCH_APEARDETAIL:
           let switchCardIndex = state.card.findIndex((element) => element.cardId == action.payload)
           let switchCard = state.card[switchCardIndex]
@@ -166,6 +234,7 @@ function cards(
             card: [ ...switchCards, switchCard ],
             alert: state.alert
           }
+
         default:
             return state
     }

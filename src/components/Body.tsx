@@ -10,6 +10,11 @@ function Body() {
   const cards = useSelector((state: CardStates) => state.card)
   const dispatch = useDispatch()
 
+  // Searchresult update when cards change
+  useEffect(() => {
+    const searchResult = cards.sort((a, b) => a.cardId - b.cardId)
+    setSearchResult(searchResult)  
+  },[cards])
 
   // Search input value
   const [searchValue, setSearchValue] = useState<string>('')
@@ -21,15 +26,17 @@ function Body() {
       setApearNewCard(false)
     }
     setSearchValue(e.target.value)
-    setSearchResult(cards.filter( i => {
-      return i.title.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1
-    }))
+    
+    let searchResult = cards.filter( i => { return i.title.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1})
+    searchResult = searchResult.sort((a, b) => a.cardId - b.cardId)
+    setSearchResult(searchResult)
   }
   
 
   // Handle clear search button
   const handleClearSearch = ():void => {
-    setSearchResult(cards)
+    const searchResult = cards.sort((a, b) => a.cardId - b.cardId)
+    setSearchResult(searchResult)
     setSearchValue("")
   }
 
@@ -43,11 +50,6 @@ function Body() {
     setApearNewCard(false)
   }
 
-  // Searchresult update when cards change
-  useEffect(() => {
-    setSearchResult(cards)  
-  },[cards])
-
   
   return (
         <div className="flex-grow flex flex-col mx-auto container max-w-3xl px-4 mb-20">
@@ -58,10 +60,18 @@ function Body() {
               {/* Categorys */}
               <div className="mb-10">
                 {/* 추후에 컴포넌트화 예정 */}
-                <button className="max-w-xs overflow-hidden mb-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">메모장📝</button>
-                <button className="max-w-xs overflow-hidden mb-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">회사</button>
-                <button className="max-w-xs overflow-hidden mb-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">장보기</button>
-                <button className="max-w-xs overflow-hidden mb-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">동해물과백두산이마르고</button>
+                <button className="max-w-xs overflow-hidden mb-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">
+                  메모장📝
+                </button>
+                <button className="max-w-xs overflow-hidden mb-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">
+                  회사
+                </button>
+                <button className="max-w-xs overflow-hidden mb-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">
+                  장보기
+                </button>
+                <button className="max-w-xs overflow-hidden mb-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">
+                  동해물과백두산이마르고
+                </button>
               </div>
           </div>
           {/* Search */}
@@ -88,8 +98,21 @@ function Body() {
           
           {/* Cards */}
           <div className="flex flex-col-reverse">
-            {searchResult.map(({cardId, title, description, user, createdAt, checked, apearCardDetail, lastSubTodoKey, subTodo}) => {
-                return <Card cardId={cardId} title={title} description={description} user={user} createdAt={createdAt} subTodo={subTodo} checked={checked} apearCardDetail={apearCardDetail} lastSubTodoKey={lastSubTodoKey} key={cardId} />
+            {searchResult.map(({cardId, title, description, user, createdAt, checked, apearCardDetail, lastSubTodoKey, subTodo, lastTagKey, tag}) => {
+              return <Card 
+                cardId={cardId}
+                title={title}
+                description={description}
+                user={user}
+                createdAt={createdAt}
+                subTodo={subTodo}
+                checked={checked}
+                apearCardDetail={apearCardDetail}
+                lastSubTodoKey={lastSubTodoKey}
+                lastTagKey={lastTagKey}
+                tag={tag}
+                key={cardId} 
+              />
             })}
           </div>
           { searchValue.length == 0 && searchResult.length == 0 && apearNewCard == false
