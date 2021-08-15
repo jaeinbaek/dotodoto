@@ -1,4 +1,3 @@
-import { CardProps } from "./../types/types";
 import { CardStates, subTodoProps } from "../types/types";
 import {
   DEL_TODO,
@@ -45,15 +44,15 @@ const initialState: CardStates = {
       tag: [
         {
           tagKey: 0,
-          value: "몰라",
+          value: "태그1",
         },
         {
           tagKey: 1,
-          value: "몰라",
+          value: "태그2",
         },
         {
           tagKey: 2,
-          value: "몰라",
+          value: "태그3",
         },
       ],
     },
@@ -184,7 +183,7 @@ function cards(
       let addTagCard = state.card[addTagCardIndex];
       // New tag obj
       let newTag = {
-        TagKey: addTagCard.lastTagKey + 1,
+        tagKey: addTagCard.lastTagKey + 1,
         checked: false,
         value: action.payload.tagValue,
       };
@@ -207,8 +206,8 @@ function cards(
         (element) => element.cardId == action.payload.cardId
       );
       let delTagCard = state.card[delTagCardIndex];
-      delTagCard.subTodo = delTagCard.subTodo.filter((element) => {
-        return element.subTodoKey != action.payload.tagId;
+      delTagCard.tag = delTagCard.tag.filter((element) => {
+        return element.tagKey != action.payload.tagId;
       });
       // Splice old card from clone state
       let delTagCards = state.card;

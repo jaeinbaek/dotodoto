@@ -9,7 +9,7 @@ import {
   switchApearDetail,
   addTag,
 } from "../actions";
-import { CardProps, CardStates, subTodoProps } from "../types/types";
+import { CardProps, CardStates, subTodoProps, tagProps } from "../types/types";
 import SubTodo from "./SubTodo";
 import Tag from "./Tag";
 
@@ -51,7 +51,7 @@ function Card({
   };
 
   // Tag
-  const [sortedTag, setSortedTag] = useState<subTodoProps[]>([]);
+  const [sortedTag, setSortedTag] = useState<tagProps[]>([]);
   const [newTag, setNewTag] = useState<string>("");
   // Handle change newTag value
   const changeNewTag = (e: any): void => {
@@ -81,7 +81,7 @@ function Card({
 
   useEffect(() => {
     const sortTag = tag.sort((a, b) => a.tagKey - b.tagKey);
-    setSortedSubTodo(sortTag);
+    setSortedTag(sortTag);
   }, [tag]);
 
   return (
@@ -133,7 +133,7 @@ function Card({
             <hr className="my-2" />
             {/* New Subtodo */}
             <div
-              className="flex items-center h-5 text-xs text-black font-semibold dark:text-white"
+              className="flex items-center h-5 text-sm text-black font-semibold dark:text-white"
               onClick={() => {}}
             >
               <input className="mr-2" type="checkbox" disabled />
@@ -143,7 +143,6 @@ function Card({
                 placeholder="여길 눌러 입력하세요"
                 onChange={changeNewSubTodo}
                 onKeyPress={handleAddNewSubTodo}
-                onClick={() => {}}
                 className="border-b border-none rounded bg-transparent border border-transparent text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent"
               />
             </div>
@@ -160,18 +159,28 @@ function Card({
             })}
             {/* Tags hr */}
             <hr className="my-2" />
-            <button className="max-w-xs overflow-hidden my-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">
-              태그지롱
-            </button>
-            <button className="max-w-xs overflow-hidden my-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">
-              태그지롱
-            </button>
-            <button className="max-w-xs overflow-hidden my-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">
-              태그지롱
-            </button>
-            <button className="max-w-xs overflow-hidden my-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">
-              태그지롱
-            </button>
+            <div className="flex flex-wrap text-sm">
+              {/* New Tag */}
+              <div className="px-2 w-1/6 mb-2 mr-2 overflow-hidden rounded-full bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">
+                <input
+                  type="text"
+                  placeholder="새 태그"
+                  onChange={changeNewTag}
+                  onKeyPress={handleAddNewTag}
+                  className="bg-transparent focus:outline-none"
+                ></input>
+              </div>
+              {sortedTag.map(({ tagKey, value }) => {
+                return (
+                  <Tag
+                    cardId={cardId}
+                    tagKey={tagKey}
+                    value={value}
+                    key={tagKey}
+                  />
+                );
+              })}
+            </div>
           </div>
         )}
       </div>

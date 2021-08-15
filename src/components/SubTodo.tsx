@@ -20,8 +20,8 @@ function SubTodo({ cardId, subTodoKey, value, checked }: subTodoProps) {
     <div
       className={
         checked
-          ? "flex items-center h-5 text-xs text-black dark:text-white line-through"
-          : "flex items-center h-5 text-xs text-black dark:text-white"
+          ? "flex items-center h-5 text-sm text-black dark:text-white line-through"
+          : "flex items-center h-5 text-sm text-black dark:text-white"
       }
     >
       <div className="">
@@ -35,7 +35,7 @@ function SubTodo({ cardId, subTodoKey, value, checked }: subTodoProps) {
       </div>
       <div className="">
         <button
-          className="mx-2 px-2 text-gray-400 rounded-full text-xs hover:bg-gray-200 dark:hover:bg-gray-700"
+          className="mx-2 px-2 text-gray-400 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-700"
           onClick={handleSubTodoDelete}
         >
           삭제

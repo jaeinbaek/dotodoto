@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { delTag } from "../actions";
 import { tagProps } from "../types/types";
@@ -6,14 +7,29 @@ function Tag({ cardId, tagKey, value }: tagProps) {
   // Use redux
   const dispatch = useDispatch();
 
+  const [apearDelete, setApearDelete] = useState<boolean>(false);
+
+  const toggleApearDeleteTrue = ():void  => {
+    setApearDelete(true)
+  }
+  const toggleApearDeleteFalse = ():void  => {
+    setApearDelete(false)
+  }
+
   // Handle delete button
-  const handleTagDelete = (): void => {
+  const handleTagDelete = ():void => {
     dispatch(delTag(cardId, tagKey));
   };
 
   return (
-    <div className="max-w-xs overflow-hidden my-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">
-      <button className="max-w-xs overflow-hidden">{value}</button>
+    <div
+      className="flex items-center mr-2 px-2 h-5 min-w-max overflow-hidden rounded-full bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200"
+    >
+      <div 
+        className="max-w-xs overflow-hidden"
+        onMouseOver={ toggleApearDeleteTrue }
+        onMouseLeave={ toggleApearDeleteFalse }
+      >{value} { apearDelete ? <button className="text-xs" onClick={handleTagDelete}>삭제</button> : '' }</div>
     </div>
   );
 }
