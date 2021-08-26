@@ -1,12 +1,13 @@
 import { useState } from "react";
 import Switch from "react-switch";
+import { Link } from 'react-router-dom';
 
 function Header() {
+  // Dotodoto logo theme
   const [iconTheme, seticonTheme] = useState<string>(
     document.documentElement.classList[0] == "dark" ? "dark" : "light"
   );
-  const [checked, setCheck] = useState<boolean>(true);
-
+  
   const handleChangeTheme = (): void => {
     // Tailwind dark/light mode switching
     if (document.documentElement.classList[0] == "dark") {
@@ -39,7 +40,12 @@ function Header() {
         </button>
 
         {/* userImg */}
-        <img className="h-6 mr-4 shadow-lg rounded-xl" src="user.png" />
+        <Link to="/login">
+          <img 
+            className="h-6 mr-4 shadow-lg rounded-xl"
+            src="user.png"
+          />
+        </Link>
       </div>
     </div>
   );

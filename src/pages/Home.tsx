@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CardProps, CardStates } from "../types/types";
-import Card from "./Card";
-import SetNewCard from "./SetNewCard";
+import Card from "../components/Card";
+import SetNewCard from "../components/SetNewCard";
 
 function Body() {
   // Use redux
@@ -58,7 +58,7 @@ function Body() {
           메모장📝
         </div>
         {/* Categorys */}
-        <div className="mb-10">
+        <div className="mb-6">
           {/* 추후에 컴포넌트화 예정 */}
           <button className="max-w-xs overflow-hidden mb-2 mr-2 px-3 rounded-full text-sm bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">
             메모장📝

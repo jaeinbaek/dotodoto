@@ -20,8 +20,8 @@ function SubTodo({ cardId, subTodoKey, value, checked }: subTodoProps) {
     <div
       className={
         checked
-          ? "flex items-center h-5 text-sm text-black dark:text-white line-through"
-          : "flex items-center h-5 text-sm text-black dark:text-white"
+          ? "flex items-center h-5 mt-1 text-sm text-black dark:text-white line-through"
+          : "flex items-center h-5 mt-1 text-sm text-black dark:text-white"
       }
     >
       <div className="">
