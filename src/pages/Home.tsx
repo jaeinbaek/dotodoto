@@ -78,13 +78,13 @@ function Body() {
       <div className="my-2 flex flex-row justify-between">
         <div className="flex flex-row items-center h-6 w-1/2">
           <input
-            className="px-1 border-b border-none rounded bg-transparent border border-transparent text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent"
+            className="h-6 px-2 border-b border-none rounded-full bg-transparent border border-transparent text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-theme-100 focus:border-transparent"
             placeholder="🔎 제목 검색"
             onChange={searchValueChange}
             value={searchValue}
           />
           <button
-            className="h-6 ml-2 px-2 text-sm text-gray-400 rounded hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-400 "
+            className="h-6 ml-1 px-2 text-sm text-gray-400 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-1 focus:ring-theme-100 "
             onClick={handleClearSearch}
           >
             초기화
@@ -93,7 +93,7 @@ function Body() {
 
         {apearNewCard ? null : (
           <button
-            className="text-gray-800 dark:text-gray-200 text-sm font-semibold hover:underline"
+            className="h-6 px-2 rounded-full text-white bg-gradient-to-r from-theme-100 via-theme-200 via-theme-300 via-theme-400 to-theme-500 hover:ring-1 hover:ring-theme-100 text-xs "
             onClick={handleAdd}
           >
             새 할일 추가

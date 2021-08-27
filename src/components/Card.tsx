@@ -107,7 +107,7 @@ function Card({
           <div>
             {apearCardDetail && (
               <button
-                className="px-2 text-rose-500 rounded-full text-xs font-semibold hover:bg-gray-200 dark:hover:bg-gray-700"
+                className="px-2 text-theme-100 rounded-full text-xs font-semibold hover:bg-gray-200 dark:hover:bg-gray-700"
                 onClick={handleDelete}
               >
                 삭제
@@ -161,7 +161,7 @@ function Card({
             <hr className="my-2" />
             <div className="flex flex-wrap text-sm">
               {/* New Tag */}
-              <div className="px-2 w-1/6 mb-2 mr-2 overflow-hidden rounded-full bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500 bg-opacity-20 text-gray-900 dark:text-gray-200">
+              <div className="px-2 w-1/6 mb-2 mr-2 overflow-hidden rounded-full bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500  bg-opacity-20 text-gray-900 dark:text-gray-200">
                 <input
                   type="text"
                   placeholder="새 태그"

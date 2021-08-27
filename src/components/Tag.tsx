@@ -29,7 +29,10 @@ function Tag({ cardId, tagKey, value }: tagProps) {
         className="max-w-xs overflow-hidden"
         onMouseOver={ toggleApearDeleteTrue }
         onMouseLeave={ toggleApearDeleteFalse }
-      >{value} { apearDelete ? <button className="text-xs" onClick={handleTagDelete}>삭제</button> : '' }</div>
+      >
+      <div>
+        {value} { apearDelete ? <button className="text-xs my-1" onClick={handleTagDelete}>삭제</button> : '' }</div>
+      </div>
     </div>
   );
 }
