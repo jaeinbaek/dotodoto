@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { CardProps, CardStates } from "../types/types";
 import Card from "../components/Card";
 import SetNewCard from "../components/SetNewCard";
@@ -7,7 +7,6 @@ import SetNewCard from "../components/SetNewCard";
 function Body() {
   // Use redux
   const cards = useSelector((state: CardStates) => state.card);
-  const dispatch = useDispatch();
 
   // Searchresult update when cards change
   useEffect(() => {
@@ -21,7 +20,7 @@ function Body() {
   const [searchResult, setSearchResult] = useState<CardProps[]>(cards);
 
   const searchValueChange = (e: any): void => {
-    if (apearNewCard == true) {
+    if (apearNewCard === true) {
       setApearNewCard(false);
     }
     setSearchValue(e.target.value);
@@ -138,9 +137,9 @@ function Body() {
           }
         )}
       </div>
-      {searchValue.length == 0 &&
-      searchResult.length == 0 &&
-      apearNewCard == false ? (
+      {searchValue.length === 0 &&
+      searchResult.length === 0 &&
+      apearNewCard === false ? (
         <div className="text-sm text-black dark:text-white">
           아무 할일이 없어요! <b>새 할일 추가</b> 버튼을 눌러 만들어보세요
         </div>

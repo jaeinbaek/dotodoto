@@ -1,11 +1,10 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { delAlert, delTodo } from "../actions";
-import { alertType, CardStates } from "../types/types";
+import { alertType } from "../types/types";
 
 function Alert({ alertId, type, value, cardId }: alertType) {
-  const alerts = useSelector((state: CardStates) => state.alert);
   const dispatch = useDispatch();
 
   const [alertType, setAlertType] = useState<string>("");
@@ -42,7 +41,7 @@ function Alert({ alertId, type, value, cardId }: alertType) {
         {value}
       </div>
       <div className="w-1/5">
-        {alertType == "check" ? (
+        {alertType === "check" ? (
           <div className="flex justify-end">
             <button
               className="h-6 mr-2 px-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-white text-sm rounded-full"

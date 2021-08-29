@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { delTag } from "../actions";
 import { tagProps } from "../types/types";

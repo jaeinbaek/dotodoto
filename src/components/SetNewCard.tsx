@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addAlert, addTodo, delSubTodo } from "../actions";
+import { useDispatch } from "react-redux";
+import { addAlert, addTodo } from "../actions";
 
 function SetNewCard(props: any) {
   // Use redux
@@ -53,7 +53,7 @@ function SetNewCard(props: any) {
   };
 
   const handleAddEnter = (e: any): void => {
-    if (e.key == "Enter") {
+    if (e.key === "Enter") {
       handleAddData();
     }
   };

@@ -1,4 +1,4 @@
-import { alertType, CardProps } from "../types/types";
+import { CardProps } from "../types/types";
 import * as types from "./ActionTypes";
 
 export type CardAction =

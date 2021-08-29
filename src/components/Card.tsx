@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
-  delTodo,
   checkTodo,
   addAlert,
   addSubTodo,
-  checkSubTodo,
   switchApearDetail,
   addTag,
 } from "../actions";
-import { CardProps, CardStates, subTodoProps, tagProps } from "../types/types";
+import { CardProps, subTodoProps, tagProps } from "../types/types";
 import SubTodo from "./SubTodo";
 import Tag from "./Tag";
 
@@ -45,7 +43,7 @@ function Card({
   };
   // Handle press enter on new subtodo input
   const handleAddNewSubTodo = (e: any): void => {
-    if (e.key == "Enter") {
+    if (e.key === "Enter") {
       dispatch(addSubTodo(cardId, newSubTodo));
     }
   };
@@ -59,7 +57,7 @@ function Card({
   };
   // Handle press enter on new subtodo input
   const handleAddNewTag = (e: any): void => {
-    if (e.key == "Enter") {
+    if (e.key === "Enter") {
       dispatch(addTag(cardId, newTag));
     }
   };
@@ -192,7 +190,7 @@ function Card({
         }
         onClick={handleDetail}
       >
-        <img className="h-2" src="detail.png" />
+        <img className="h-2" src="detail.png" alt="detail button" />
       </div>
     </div>
   );

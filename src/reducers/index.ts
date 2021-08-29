@@ -1,4 +1,4 @@
-import { CardStates, subTodoProps } from "../types/types";
+import { CardStates } from "../types/types";
 import {
   DEL_TODO,
   ADD_TODO,
@@ -12,7 +12,7 @@ import {
   DEL_ALERT,
   SWITCH_APEARDETAIL,
 } from "./../actions/ActionTypes";
-import { CardAction, checkSubTodo, delSubTodo } from "./../actions/index";
+import { CardAction } from "./../actions/index";
 
 // Def init state
 const initialState: CardStates = {
@@ -77,7 +77,7 @@ function cards(
 
     case DEL_TODO:
       const delCardResult = state.card.filter(
-        (element) => element.cardId != action.payload
+        (element) => element.cardId !== action.payload
       );
       return {
         lastCardId: state.lastCardId,
@@ -88,7 +88,7 @@ function cards(
 
     case CHECK_TODO:
       let checkCardIndex = state.card.findIndex(
-        (element) => element.cardId == action.payload
+        (element) => element.cardId === action.payload
       );
       let checkCard = state.card[checkCardIndex];
       checkCard.checked = !checkCard.checked;
@@ -106,7 +106,7 @@ function cards(
     case ADD_SUBTODO:
       // Card to add subtodo
       let addSubTodoCardIndex = state.card.findIndex(
-        (element) => element.cardId == action.payload.cardId
+        (element) => element.cardId === action.payload.cardId
       );
       let addSubTodoCard = state.card[addSubTodoCardIndex];
       // New subtodo obj
@@ -131,11 +131,11 @@ function cards(
     case DEL_SUBTODO:
       // Card to delete subtodo
       let delSubTodoCardIndex = state.card.findIndex(
-        (element) => element.cardId == action.payload.cardId
+        (element) => element.cardId === action.payload.cardId
       );
       let delSubTodoCard = state.card[delSubTodoCardIndex];
       delSubTodoCard.subTodo = delSubTodoCard.subTodo.filter((element) => {
-        return element.subTodoKey != action.payload.subTodoId;
+        return element.subTodoKey !== action.payload.subTodoId;
       });
       // Splice old card from clone state
       let delSubTodoCards = state.card;
@@ -150,11 +150,11 @@ function cards(
     case CHECK_SUBTODO:
       // Card to add subtodo
       let checkSubTodoCardIndex = state.card.findIndex(
-        (element) => element.cardId == action.payload.cardId
+        (element) => element.cardId === action.payload.cardId
       );
       let checkSubTodoCard = state.card[checkSubTodoCardIndex];
       let checkSubTodoIndex = checkSubTodoCard.subTodo.findIndex(
-        (element) => element.subTodoKey == action.payload.subTodoKey
+        (element) => element.subTodoKey === action.payload.subTodoKey
       );
 
       let checkSubTodo = checkSubTodoCard.subTodo[checkSubTodoIndex];
@@ -178,7 +178,7 @@ function cards(
     case ADD_TAG:
       // Card to add tag
       let addTagCardIndex = state.card.findIndex(
-        (element) => element.cardId == action.payload.cardId
+        (element) => element.cardId === action.payload.cardId
       );
       let addTagCard = state.card[addTagCardIndex];
       // New tag obj
@@ -203,11 +203,11 @@ function cards(
     case DEL_TAG:
       // Card to delete tag
       let delTagCardIndex = state.card.findIndex(
-        (element) => element.cardId == action.payload.cardId
+        (element) => element.cardId === action.payload.cardId
       );
       let delTagCard = state.card[delTagCardIndex];
       delTagCard.tag = delTagCard.tag.filter((element) => {
-        return element.tagKey != action.payload.tagId;
+        return element.tagKey !== action.payload.tagId;
       });
       // Splice old card from clone state
       let delTagCards = state.card;
@@ -240,7 +240,7 @@ function cards(
 
     case DEL_ALERT:
       const delAlertResult = state.alert.filter(
-        (element) => element.alertId != action.payload
+        (element) => element.alertId !== action.payload
       );
       return {
         lastCardId: state.lastCardId,
@@ -251,7 +251,7 @@ function cards(
 
     case SWITCH_APEARDETAIL:
       let switchCardIndex = state.card.findIndex(
-        (element) => element.cardId == action.payload
+        (element) => element.cardId === action.payload
       );
       let switchCard = state.card[switchCardIndex];
       switchCard.apearCardDetail = !switchCard.apearCardDetail;
